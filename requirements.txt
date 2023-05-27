@@ -2,4 +2,3 @@ flask
 openpyxl
 werkzeug
 gunicorn
-os
