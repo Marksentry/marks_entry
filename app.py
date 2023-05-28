@@ -22,12 +22,10 @@ def home():
         if 'file' in request.files:
             file = request.files['file']
             directory = request.form.get('directory')
-            if not os.path.isdir(directory):
-                os.makedirs(directory, exist_ok=True)
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(directory, filename)
+            file_path = os.path.join(directory ,secure_filename(file.filename))
             file.save(file_path)
             session['filename'] = file_path
+
         if request.form.get('Reg_no'):
             Reg_no = request.form["Reg_no"]
             reg_no = '6213' + Reg_no
@@ -178,4 +176,5 @@ def home():
 
 if __name__=="__main__":
     app.run(debug=True)
+
 
