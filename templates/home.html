@@ -15,10 +15,34 @@
               &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;we can enter the marks.</p>
           <input type="file" id="file" name="file" class="file">
           <input type="text" id="directory" name="directory">
-          <input type="submit" id="submit" value="submit" class="save">
+          <input type="submit" onclick="submit" value="submit" class="save">
         </div>
      </form>
-
+     <script>
+         document.getElementById("upload-form").addEventListener("submit", function(event) {
+         event.preventDefault();
+         var formData = new FormData();
+         formData.append("file", document.getElementById("file-input").files[0]);
+         formData.append("directory", document.getElementById("directory-input);
+         fetch("/", {
+             method: "POST",
+             body: formData
+         })
+         .then(function(response) {
+           if (response.ok) {
+               return response.text();
+           } else {
+               throw new Error("Error: " + response.status);
+           }
+         })
+        .then(function(data) {
+             console.log(data);
+        })
+        .catch(function(error) {
+             console.error(error);
+        });
+        });
+       </script>  
 
    {% else %}
        <div class="wrapper">
