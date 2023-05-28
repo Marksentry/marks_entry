@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/html">
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,39 +7,44 @@
 </head>
 <body>
    {% if choose_file %}
-     <form method="POST"  enctype="multipart/form-data" action="{{ url_for('home') }}">
+     <form method="POST"  enctype="multipart/form-data" id="uploadForm" action="{{ url_for('home') }}">
        <div class="front">
           <h1 class="heads">MARK ENTRY</h1>
           <p class="para"> This website for only entering the marks in excel sheet.<br>
               &ensp;First creating an excel file in your pc or Laptop then<br>
               &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;we can enter the marks.</p>
-           <input type="file" id="fileInput" name="file" class="file">
-           <input type="text" id="directoryInput" name="directory">
-           <button onclick="submitData()" value="Save" class="save">Submit</button>
-    <script>
-        function submitData() {
-            const selectedFile = document.getElementById('fileInput').files[0];
-            const selectedDirectory = document.getElementById('directoryInput').value;
-
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('directory', selectedDirectory);
-
-            fetch('/process', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Server response:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+        <input type="file" id="fileInput" name="file" class="file">
+        <input type="text" id="directoryInput" name="directory">
+        <button type="button" id="submit" class="save">Submit</button>
        </div>
      </form>
+     <script>
+         document.getElementById("upload-form").addEventListener("submit", function(event) {
+         event.preventDefault();
+         var formData = new FormData();
+         formData.append("file", document.getElementById("file-input").files[0]);
+         formData.append("directory", document.getElementById("directory-input);
+         fetch("/", {
+             method: "POST",
+             body: formData
+         })
+         .then(function(response) {
+           if (response.ok) {
+               return response.text();
+           } else {
+               throw new Error("Error: " + response.status);
+           }
+         })
+        .then(function(data) {
+             console.log(data);
+        })
+        .catch(function(error) {
+             console.error(error);
+        });
+        });
+       </script>
+
+
    {% else %}
        <div class="wrapper">
          <div class="display">
@@ -260,3 +265,4 @@
   {% endif %}
 </body>
 </html>
+
