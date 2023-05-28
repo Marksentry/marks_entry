@@ -18,31 +18,6 @@
         <button type="submit" id="submit" class="save">Submit</button>
        </div>
      </form>
-     <script>
-         document.getElementById("upload-form").addEventListener("submit", function(event) {
-         event.preventDefault();
-         var formData = new FormData();
-         formData.append("file", document.getElementById("file-input").files[0]);
-         formData.append("directory", document.getElementById("directory-input);
-         fetch("/", {
-             method: "POST",
-             body: formData
-         })
-         .then(function(response) {
-           if (response.ok) {
-               return response.text();
-           } else {
-               throw new Error("Error: " + response.status);
-           }
-         })
-        .then(function(data) {
-             console.log(data);
-        })
-        .catch(function(error) {
-             console.error(error);
-        });
-        });
-       </script>
 
 
    {% else %}
