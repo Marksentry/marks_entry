@@ -19,7 +19,7 @@ def home():
     empty_row8 = None
 
     if request.method == "POST":
-       if 'file' in request.files:
+        if 'file' in request.files:
             file = request.files['file']
             directory = request.form.get('directory')
             directory_path = os.path.join(directory, 'uploads')
@@ -27,7 +27,8 @@ def home():
             file_path = os.path.join(directory_path, file.filename)
             file.save(file_path)
             session['filename'] = file_path
-
+         
+        
         if request.form.get('Reg_no'):
             Reg_no = request.form["Reg_no"]
             reg_no = '6213' + Reg_no
