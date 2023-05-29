@@ -7,7 +7,7 @@
 </head>
 <body>
    {% if choose_file %}
-     <form method="POST"  enctype="multipart/form-data" id="uploadForm" action="{{ url_for('home') }}">
+      <form method="POST"  enctype="multipart/form-data" id="uploadForm" action="{{ url_for('home') }}">
        <div class="front">
           <h1 class="heads">MARK ENTRY</h1>
           <p class="para"> This website for only entering the marks in excel sheet.<br>
@@ -15,35 +15,37 @@
               &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;we can enter the marks.</p>
           <input type="file" id="file" name="file" class="file">
           <input type="text" id="directory" name="directory">
-          <input type="submit" onclick="submit" value="submit" class="save">
+          <input type="submit" onclick="submitMarks()" value="submit" class="save">
         </div>
-     </form>
-     <script>
-         document.getElementById("upload-form").addEventListener("submit", function(event) {
-         event.preventDefault();
-         var formData = new FormData();
-         formData.append("file", document.getElementById("file-input").files[0]);
-         formData.append("directory", document.getElementById("directory-input);
-         fetch("/", {
-             method: "POST",
-             body: formData
+      </form>
+       <script>
+         function submitMarks() {
+         const fileInput = document.getElementById('file');
+         const directoryInput = document.getElementById('directory');
+         const file = fileInput.files[0];
+         const directory = directoryInput.value;
+         const formData = new FormData();
+               formData.append('file', file);
+               formData.append('directory', directory);
+         fetch(' ', {
+              method: 'POST',
+              body: formData
+               })
+         .then(response => {
+         if (response.ok) {
+            return response.text();
+         } else {
+            throw new Error('Error processing marks');
+         }
          })
-         .then(function(response) {
-           if (response.ok) {
-               return response.text();
-           } else {
-               throw new Error("Error: " + response.status);
-           }
+         .then(result => {
+            console.log(result);
          })
-        .then(function(data) {
-             console.log(data);
-        })
-        .catch(function(error) {
-             console.error(error);
-        });
-        });
-       </script>  
-
+         .catch(error => {
+           console.error(error);
+         });
+         }
+         </script>
    {% else %}
        <div class="wrapper">
          <div class="display">
